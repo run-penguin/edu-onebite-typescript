@@ -36,3 +36,21 @@
 - 실행은 되지만 오류가 발생하고 프로그램이 비정상적으로 종료됨
 - 복잡한 프로그램인 경우, 오류가 실행과 동시에 발생하지 않고 이후에 발생하여 서비스가 마비될 수 있음
 - 따라서 런타임에 오류가 발생하게 되면 아주 치명적인 문제가 될 수 있음
+
+## 정적 타입 시스템
+
+1. 코드 실행 전에 모든 변수의 타입을 결정함
+2. 타입 관련 오류가 있으면 에디터 상에서 알려주고 실행이 불가능함 -> 의도치 않은 실수 방지
+3. 모든 변수에 타입을 정의해야 하므로 매우 귀찮고 코드의 양이 늘어남
+
+![정적타입시스템](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fb675ad24-2e00-4126-8e31-a36c8fba8b1f%2FUntitled.png?table=block&id=72e3d652-d351-4512-8d26-569f7e0c202b&cache=v2)
+
+# 타입스크립트와 점진적 타이핑
+
+> 타입스크립트 = 동적 타입 시스템 + 정적 타입 시스템
+
+- 변수의 타입을 코드 실행 전에 결정하고 프로그램 실행전에 검사
+- 변수에 담기는 초기값을 기준으로 자동으로 타입을 추론함
+- 점진적으로 타입을 결정함 -> 점진적 타입 시스템이라고 함
+
+![점진적타입시스템](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F9fa61087-f588-44dd-8ff6-29621bfb0131%2FUntitled.png?table=block&id=7dba02b4-fa17-468d-899c-4351487903ea&cache=v2)
