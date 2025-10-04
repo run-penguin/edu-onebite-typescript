@@ -54,3 +54,28 @@
 - 점진적으로 타입을 결정함 -> 점진적 타입 시스템이라고 함
 
 ![점진적타입시스템](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F9fa61087-f588-44dd-8ff6-29621bfb0131%2FUntitled.png?table=block&id=7dba02b4-fa17-468d-899c-4351487903ea&cache=v2)
+
+# 타입스크립트 동작 원리
+
+## 대다수의 프로그래밍 언어 동작
+
+- 컴파일(Compile) = 프로그래밍 언어(JavaScript) -> 기계어(바이트 코드)로 변환
+
+> 컴파일을 하는 녀석 = 컴파일러
+
+
+- 컴파일러는 바이트 코드로 변환하기 전 AST(추상 문법 트리)라는 특별한 형태로 먼저 변환함
+
+> AST(추상 문법 트리) = 코드의 공백이나 주석 탭 등의 코드 실행에 관계없는 요소를 전부 제거하고 트리 형태의 자료구조에 코드를 쪼개서 저장한 형태
+
+![대다수의프로그래밍언어동작](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F514e4f15-5328-43bb-b58a-b505967179db%2FUntitled.png?table=block&id=c505f741-44a9-487b-9980-625728c387e4&cache=v2)
+
+## 타입스크립트의 동작 과정
+
+![타입스크립트동작과정](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F45b2f6da-ce1d-4d0a-8daf-a8bad82b83cc%2FUntitled.png?table=block&id=44d3137a-00c1-4e1d-9351-02e4bc2cf90b&cache=v2)
+
+- 대부분의 언어를 컴파일하면 바이트 코드가 만들어지는 것과 달리, 타입스크립트를 컴파일하면 자바스크립트 코드가 만들어짐
+
+![타입스크립트실행과정](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8d1fb73a-a374-44f0-a119-c5ed182e2a2f%2FUntitled.png?table=block&id=9fa72466-ad68-49a1-b096-ad667ab6d957&cache=v2)
+
+- 타입스크립트에서 작성한 타입 관련 코드들은 결국 자바스크립트로 변환될 때 사라지게 되어 프로그램 실행에 영향을 미치지 않음
