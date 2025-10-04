@@ -14,6 +14,12 @@
 ## 타입 시스템
 언어의 타입과 관련된 문법 체계
 > 값들을 어떤 기준으로 묶어 타입을 규정할 것인가?
+
+
 > 코드의 타입을 언제 검사할 것인가?
+
+
 > 어떻게 타입을 검사할 것인가?
+
+
 ![타입시스템](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F6c167134-9ffa-4aba-b8b8-fb559cad664e%2FUntitled.png?table=block&id=5242549c-8d18-4e3f-919b-c7f331451f0b&cache=v2)
