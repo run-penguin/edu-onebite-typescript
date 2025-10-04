@@ -65,7 +65,7 @@ var a = 1;
 node src/index.js
 ```
 
-# TSX(typeScript Execute)
+# TSX(TypeScript Execute)
 
 (ts-node는 Node 20 버전 이상에서 동작하지 않으므로 tsx로 대체)
 
