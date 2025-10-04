@@ -25,9 +25,11 @@
 
 ## 동적 타입 시스템
 
-![동적타입시스템](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F09507af6-a38a-4609-b8fc-c0cb970e4aba%2FUntitled.png?table=block&id=3ddfe43d-171c-46eb-82b1-9ae2b39c8c78&cache=v2)
+1. 변수의 타입들을 코드가 실행되는 도중에 결정 -> 미리 변수 타입을 설정하지 않음
+2. 현재 변수에 담긴 값에 따라 변수의 타입이 동적으로 변경됨
+3. 변수 하나로 여러 곳에 사용 가능
 
-![동적타입시스템의장점](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F126e2121-481f-4cdf-bc96-de8cff6200aa%2FUntitled.png?table=block&id=a428e240-f3ab-418c-ac9b-200eeb97d883&cache=v2)
+그러나 아래와 같은 문제가 있음
 
 ![동적타입시스템의오류](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F59ce432a-f8c4-414e-bcf7-ab28ae7570a2%2FUntitled.png?table=block&id=016932fc-e0c0-4737-b445-ea220e6beb91&cache=v2)
 
