@@ -1,6 +1,15 @@
 # 목차
-- section1 - 패키지 생성 및 실행
-- section1-compile - 컴파일 설정
+
+1. section1
+    - 패키지 생성 및 실행
+
+2. section1-compile
+    - 컴파일 설정
+
+3. section2
+    - 기본 타입
+    - 원시 타입과 리터럴 타입
+    - 배열과 튜플
 
 
 # 타입스크립트?

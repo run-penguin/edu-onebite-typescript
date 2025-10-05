@@ -75,3 +75,48 @@ let numA: 10 = 10;
 let strA: "hello" = "hello";
 let boolA: true = true;
 ```
+
+# 배열과 튜플
+
+## 배열 타입
+
+- 배열요소타입[] 형식으로 정의
+- Array<배열요소타입> 으로도 형식 정의 가능 (제네릭)
+
+```typescript
+let numArr: number[] = [1, 2, 3];
+let strArr: string[] = ["hello", "im", "winterlood"];
+
+let boolArr: Array<boolean> = [true, false, true];
+```
+
+### 다양한 타입 요소를 갖는 배열 타입 정의
+
+소괄호와 바(|)를 이용해 정의 (유니온 타입)
+
+```typescript
+let multiArr: (string | number)[] = [1, "hello"];
+```
+
+### 다차원 배열 타입 정의
+
+```typescript
+let doubleArr: number[][] = [
+  [1, 2, 3],
+  [4, 5],
+];
+```
+
+## 튜플 타입
+
+- 타입스크립트의 특수한 타입
+- 고정된 길이와 배열을 의미
+
+```typescript
+let tup1: [number, number] = [1, 2];
+let tup2: [number, string, boolean] = [1, "2", true];
+```
+
+***컴파일 시 자바스크립트 배열로 변환되므로 결국 튜플은 배열임***
+
+***push나 pop을 이용해 고정된 길이를 무시하고 요소를 추가/삭제 가능하므로 주의 필요***
