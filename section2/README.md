@@ -120,3 +120,72 @@ let tup2: [number, string, boolean] = [1, "2", true];
 ***컴파일 시 자바스크립트 배열로 변환되므로 결국 튜플은 배열임***
 
 ***push나 pop을 이용해 고정된 길이를 무시하고 요소를 추가/삭제 가능하므로 주의 필요***
+
+
+# 객체 타입
+
+## 객체 타입 정의
+
+### object로 정의
+
+```typescript
+let user: object = {
+  id: 1,
+  name: "이정환",
+};
+```
+
+- 하지만 user.id처럼 객체의 특정 프로퍼티에 접근하려고 하면 오류가 발생함
+- 타입스크립트의 object 타입은 객체인 것 외에 프로퍼티에 대한 정보는 가지고 있지 않음
+
+### 리터럴 타입으로 정의
+
+```typescript
+let user: {
+  id: number;
+  name: string;
+} = {
+  id: 1,
+  name: "이정환",
+};
+```
+
+- 객체 리터럴 타입
+- 프로퍼티에 접근 가능
+- 기존의 정적 타입 시스템을 따르는 언어와 달리 프로퍼티를 기존으로 객체의 구조를 정의하여 '구조적 타입 시스템'으로 부름
+
+## 특수한 프로퍼티 정의
+
+### 선택적 프로퍼티 (Optional Property)
+
+- 특정 프로퍼티가 있을수도 없을수도 있는 경우
+- 프로퍼티의 이름 뒤에 ? 사용
+- 선택적 프로퍼티가 존재한다면 value 타입은 명시한 것과 동일해야 함
+
+```typescript
+let user: {
+  id?: number; // 선택적 프로퍼티가 된 id
+  name: string;
+} = {
+  id: 1,
+  name: "이정환",
+};
+
+user = {
+  name: "홍길동",
+};
+```
+
+### 읽기 전용 프로퍼티 (Readonly Property)
+
+```typescript
+let user: {
+  id?: number;
+  readonly name: string; // name은 이제 Readonly 프로퍼티가 되었음
+} = {
+  id: 1,
+  name: "이정환",
+};
+
+user.name = "dskfd"; // 오류 발생
+```
