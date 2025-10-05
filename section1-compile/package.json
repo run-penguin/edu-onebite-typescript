@@ -1,0 +1,14 @@
+{
+  "name": "section1-compile",
+  "version": "1.0.0",
+  "description": "- 타입스크립트의 컴파일은 작성한 코드에 타입 오류가 없는지 검사하고 오류가 없다면 자바스크립트 코드로 변환함\r - 컴파일 과정에 옵션을 세부적으로 설정할 수 있음\r - 타입스크립트는 타언어에 비해 컴파일러 옵션을 자유롭고 쉽게 설정할 수 있음",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^24.6.2"
+  }
+}

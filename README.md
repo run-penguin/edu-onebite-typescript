@@ -1,5 +1,6 @@
 # 목차
 - section1 - 패키지 생성 및 실행
+- section1-compile - 컴파일 설정
 
 
 # 타입스크립트?
