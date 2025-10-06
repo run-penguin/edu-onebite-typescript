@@ -9,6 +9,8 @@
 7. [타입 별칭](#타입-별칭-type-alias)
 8. [인덱스 시그니처](#인덱스-시그니처-index-signature)
 9. [열거형 타입](#열거형enum-타입)
+10. [any 타입](#any-타입)
+11. [unknown 타입](#unknown-타입)
 
 
 
@@ -317,3 +319,53 @@ const user1 = {
 
 
 
+## any 타입
+
+타입스크립트에서만 제공되며, 타입 검사를 받지 않는 특수한 타입
+
+```typescript
+let anyVar: any = 10;
+anyVar = "hello";
+
+anyVar = true;
+anyVar = {};
+anyVar = () => {};
+
+anyVar.toUpperCase();
+anyVar.toFixed();
+anyVar.a;
+
+let num: number = 10;
+num = anyVar;
+```
+
+- 어떤 타입의 값도 범용적으로 담아 사용할 수 있고 호출 가능함
+- 반대로 어떤 타입으로 정의된 변수던 할당할 수 있음
+
+> 그러나 실제 실행해보면 런타임에서 오류가 발생함!! 정말 어쩔 수 없는 경우를 제외하고는 사용하지 않아야 함
+
+
+
+
+## Unknown 타입
+
+any 타입과 비슷하지만 보다 안전한 타입
+
+```typescript
+let unknownVar: unknown;
+
+unknownVar = "";
+unknownVar = 1;
+unknownVar = () => {};
+```
+
+- 어떤 타입의 값도 담을 수 있음
+- 어떤 타입의 변수에도 저장할 수 없음
+- 어떤 연산에도 참여할 수 없으며, 어떤 메서드도 사용할 수 없음 (하지만 아래와 같이 타입을 보장한다면 가능)
+
+```typescript
+if (typeof unknownVar === "number") {
+	// 이 조건이 참이된다면 unknownVar는 number 타입으로 볼 수 있음
+  unknownVar * 2;
+}
+```
