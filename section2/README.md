@@ -11,6 +11,8 @@
 9. [열거형 타입](#열거형enum-타입)
 10. [any 타입](#any-타입)
 11. [unknown 타입](#unknown-타입)
+12. [void 타입](#void-타입)
+13. [never 타입](#never-타입)
 
 
 
@@ -369,3 +371,48 @@ if (typeof unknownVar === "number") {
   unknownVar * 2;
 }
 ```
+
+
+
+## void 타입
+
+아무 값도 없음을 의미하는 타입
+
+```typescript
+function func2(): void {
+    console.log("hello");
+}
+```
+
+- 보통은 아무런 값도 반환하지 않는 함수의 반환값 타입을 정의할 때 사용
+- 변수의 타입으로도 지정할 수 있으나, void 타입의 변수에는 undefined 외에는 담을 수 없음
+- tsconfig.json에 strictNullChecks = false로 지정 시에는 null 값을 담을 수 있음
+
+- 타입스크립트 5.1 버전 이전에는 아래와 같이 함수에서 아무것도 반환하지 않을 때 undefined를 명시하면 오류가 발생했으나 현재는 정상 동작함
+```typescript
+function foo(): undefined {
+  // no returns
+}
+```
+
+
+
+## never 타입
+
+- 불가능을 의미하는 타입
+- 어떤 값도 반환할 수 없는 상황일 때, 해당 함수의 반환값 타입으로 사용
+- 변수의 타입을 never로 정의하면 any를 포함해 어떤 값도 담을 수 없음
+
+```typescript
+function func3(): never {
+    while (true) {}
+}
+```
+이 함수는 영원히 종료될 수 없기 때문에 뭔가를 반환한다는 것 자체가 '불가능'함
+
+```typescript
+function func4(): never {
+    throw new Error();
+}
+```
+의도적으로 오류를 발생시키는 함수도 가능
