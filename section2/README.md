@@ -1,17 +1,33 @@
-# 기본 타입 (Basic Types)
+# 목차
+
+1. [기본 타입](#기본-타입-basic-types)
+2. [원시 타입](#원시-타입-primitive-type)
+3. [리터럴 타입](#리터럴-타입)
+4. [배열 타입](#배열-타입)
+5. [튜플 타입](#튜플-타입)
+6. [객체 타입](#객체-타입)
+7. [타입 별칭](#타입-별칭-type-alias)
+8. [인덱스 시그니처](#인덱스-시그니처-index-signature)
+9. [열거형 타입](#열거형enum-타입)
+
+
+
+## 기본 타입 (Basic Types)
 
 타입스크립트가 자체적으로 제공하는 타입 (내장 타입)
 
 ![기본타입](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F49eaebca-f260-4d43-b59f-6d6e3d0174cb%2FUntitled.png?table=block&id=967f7334-5247-4be3-9cdc-99490ea2b833&cache=v2)
 
-# 원시 타입 (Primitive Type)
+
+
+
+## 원시 타입 (Primitive Type)
 
 동시에 한개의 값만 저장할 수 있는 타입
 
 > 변수 이름 뒤에 콜론(:)과 함께 변수의 타입을 정의하는 문법을 '타입 주석' 또는 '타입 어노테이션'이라고 함
 
-## number
-
+### number
 ```typescript
 let num1: number = 123;
 let num2: number = -123;
@@ -22,8 +38,7 @@ let num6: number = -Infinity;
 let num7: number = NaN;
 ```
 
-## string
-
+### string
 ```typescript
 let str1: string = "hello";
 let str2: string = "hello";
@@ -31,25 +46,23 @@ let str3: string = `hello`;
 let str4: string = `hello ${num1}`;
 ```
 
-## boolean
-
+### boolean
 ```typescript
 let bool1: boolean = true;
 let bool2: boolean = false;
 ```
 
-## null
-
+### null
 ```typescript
 let null1: null = null;
 ```
 
-## undefined
+### undefined
 ```typescript
 let unde1: undefined = undefined;
 ```
 
-## null 값을 다른 타입의 변수에 할당하기
+### null 값을 다른 타입의 변수에 할당하기
 
 아직 값이 정해지지 않은 상태에서 임시로 null을 넣고자 하는 경우 tsconfig.json의 아래 옵션을 변경
 
@@ -66,7 +79,10 @@ let unde1: undefined = undefined;
 - strict 옵션의 하위 옵션으로 strict 옵션에따라 자동으로 설정되며, 직접 설정하면 설정된 옵션에 따름
 - 안전한 타입스크립트 코드를 작성하는 측면에서는 도움이 되지 않음
 
-# 리터럴 타입
+
+
+
+## 리터럴 타입
 
 하나의 값만 포함하는 타입
 
@@ -76,7 +92,8 @@ let strA: "hello" = "hello";
 let boolA: true = true;
 ```
 
-# 배열과 튜플
+
+
 
 ## 배열 타입
 
@@ -107,6 +124,9 @@ let doubleArr: number[][] = [
 ];
 ```
 
+
+
+
 ## 튜플 타입
 
 - 타입스크립트의 특수한 타입
@@ -122,11 +142,13 @@ let tup2: [number, string, boolean] = [1, "2", true];
 ***push나 pop을 이용해 고정된 길이를 무시하고 요소를 추가/삭제 가능하므로 주의 필요***
 
 
-# 객체 타입
 
-## 객체 타입 정의
 
-### object로 정의
+## 객체 타입
+
+### 객체 타입 정의
+
+#### * object로 정의
 
 ```typescript
 let user: object = {
@@ -138,7 +160,7 @@ let user: object = {
 - 하지만 user.id처럼 객체의 특정 프로퍼티에 접근하려고 하면 오류가 발생함
 - 타입스크립트의 object 타입은 객체인 것 외에 프로퍼티에 대한 정보는 가지고 있지 않음
 
-### 리터럴 타입으로 정의
+#### * 리터럴 타입으로 정의
 
 ```typescript
 let user: {
@@ -154,9 +176,9 @@ let user: {
 - 프로퍼티에 접근 가능
 - 기존의 정적 타입 시스템을 따르는 언어와 달리 프로퍼티를 기준으로 객체의 구조를 정의하여 '구조적 타입 시스템'으로 부름 (대부분의 타언어는 '명목적 타입 시스템')
 
-## 특수한 프로퍼티 정의
+### 특수한 프로퍼티 정의
 
-### 선택적 프로퍼티 (Optional Property)
+#### * 선택적 프로퍼티 (Optional Property)
 
 - 특정 프로퍼티가 있을수도 없을수도 있는 경우
 - 프로퍼티의 이름 뒤에 ? 사용
@@ -176,7 +198,7 @@ user = {
 };
 ```
 
-### 읽기 전용 프로퍼티 (Readonly Property)
+#### * 읽기 전용 프로퍼티 (Readonly Property)
 
 ```typescript
 let user: {
@@ -190,7 +212,8 @@ let user: {
 user.name = "dskfd"; // 오류 발생
 ```
 
-# 타입 별칭과 인덱스 시그니처
+
+
 
 ## 타입 별칭 (Type Alias)
 
@@ -208,6 +231,9 @@ type User = {
 ```
 
 > 변수 선언과 마찬가지로 동일한 스코프에 동일한 이름의 타입 별칭을 선언할 수 없음
+
+
+
 
 ## 인덱스 시그니처 (Index Signature)
 
@@ -232,7 +258,9 @@ type CountryCodes = {
 > 인덱스 시그니처의 value 타입과 직접 추가한 프로퍼티의 value 타입이 호환(일치)해야 함
 
 
-# 열거형(Enum) 타입
+
+
+## 열거형(Enum) 타입
 
 - 자바스크립트에는 존재하지 않고 타입스크립트에서만 사용할 수 있는 특별한 타입
 - 열거형은 다음과 같이 여러개의 값을 나열하는 용도로 사용함
@@ -265,7 +293,7 @@ enum Role {
 }
 ```
 
-## 문자열 열거형
+### 문자열 열거형
 
 - 모든 멤버의 값이 문자열 값인 enum
 - 오타 발생 방지
@@ -283,6 +311,9 @@ const user1 = {
 };
 ```
 
-## enum은 컴파일 결과 객체로 변환
+### enum은 컴파일 결과 객체로 변환
 
 다른 타입들처럼 사라지지 않고 자바스크립트 객체로 변환됨
+
+
+

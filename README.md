@@ -1,3 +1,5 @@
+출처 : https://ts.winterlood.com/7250edd7-a3fd-4662-b756-f11f927c73f2
+
 # 목차
 
 1. section1
@@ -8,39 +10,47 @@
 
 3. section2
     - 기본 타입
-    - 원시 타입과 리터럴 타입
-    - 배열과 튜플
+    - 원시 타입
+    - 리터럴 타입
+    - 배열 타입
+    - 튜플 타입
     - 객체
-    - 타입 별칭과 인덱스 시그니처
+    - 타입 별칭
+    - 인덱스 시그니처
     - 열거형 타입
+    - Any 타입
+    - Unknown 타입
+    - void 타입
+    - never 타입
 
 
-# 타입스크립트?
-출처 : https://ts.winterlood.com/7250edd7-a3fd-4662-b756-f11f927c73f2
 
+
+
+
+## 타입스크립트?
 - 2012년 마이크로소프트의 개발자이자 C#의 창시자 Anders Hejlsberg(앤더스 하일스버그)로부터 탄생
 - 오픈소스
 - 자바스크립트의 확장판 (자바스크립트를 더 안전하게 사용할 수 있도록 "타입 관련 기능들을 추가한" 언어)
 
-# 타입스크립트가 필요한 이유
+## 타입스크립트가 필요한 이유
 - 자바스크립트는 웹 브라우저에서 간단한 상호작용을 위해 탄생 -> 안정성이나 견고함은 일부 포기하고 빠르고 간결하게 만드는 것에 중점
 - Node.js의 등장으로 자바스크립트를 어디서든 실행할 수 있게 됨 -> 다양한 프로그램을 만들기 시작 -> 엄격하지 않은 문법 때문에 안정성 부족 -> 타입스크립트 등장
 
-# 자바스크립트 한계점
 
-## 타입 시스템
+## 자바스크립트 한계점
+
+### 타입 시스템
 
 언어의 타입과 관련된 문법 체계
 
-> 값들을 어떤 기준으로 묶어 타입을 규정할 것인가?
-
-> 코드의 타입을 언제 검사할 것인가?
-
-> 어떻게 타입을 검사할 것인가?
+- 값들을 어떤 기준으로 묶어 타입을 규정할 것인가?
+- 코드의 타입을 언제 검사할 것인가?
+- 어떻게 타입을 검사할 것인가?
 
 ![타입시스템](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F6c167134-9ffa-4aba-b8b8-fb559cad664e%2FUntitled.png?table=block&id=5242549c-8d18-4e3f-919b-c7f331451f0b&cache=v2)
 
-## 동적 타입 시스템
+### 동적 타입 시스템
 
 1. 변수의 타입들을 코드가 실행되는 도중에 결정 -> 미리 변수 타입을 설정하지 않음
 2. 현재 변수에 담긴 값에 따라 변수의 타입이 동적으로 변경됨
@@ -54,7 +64,7 @@
 - 복잡한 프로그램인 경우, 오류가 실행과 동시에 발생하지 않고 이후에 발생하여 서비스가 마비될 수 있음
 - 따라서 런타임에 오류가 발생하게 되면 아주 치명적인 문제가 될 수 있음
 
-## 정적 타입 시스템
+### 정적 타입 시스템
 
 1. 코드 실행 전에 모든 변수의 타입을 결정함
 2. 타입 관련 오류가 있으면 에디터 상에서 알려주고 실행이 불가능함 -> 의도치 않은 실수 방지
@@ -62,7 +72,10 @@
 
 ![정적타입시스템](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fb675ad24-2e00-4126-8e31-a36c8fba8b1f%2FUntitled.png?table=block&id=72e3d652-d351-4512-8d26-569f7e0c202b&cache=v2)
 
-# 타입스크립트와 점진적 타이핑
+
+
+
+## 타입스크립트와 점진적 타이핑
 
 > 타입스크립트 = 동적 타입 시스템 + 정적 타입 시스템
 
@@ -72,9 +85,12 @@
 
 ![점진적타입시스템](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F9fa61087-f588-44dd-8ff6-29621bfb0131%2FUntitled.png?table=block&id=7dba02b4-fa17-468d-899c-4351487903ea&cache=v2)
 
-# 타입스크립트 동작 원리
 
-## 대다수의 프로그래밍 언어 동작
+
+
+## 타입스크립트 동작 원리
+
+### 대다수의 프로그래밍 언어 동작
 
 - 컴파일(Compile) = 프로그래밍 언어(JavaScript) -> 기계어(바이트 코드)로 변환
 
@@ -87,7 +103,7 @@
 
 ![대다수의프로그래밍언어동작](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F514e4f15-5328-43bb-b58a-b505967179db%2FUntitled.png?table=block&id=c505f741-44a9-487b-9980-625728c387e4&cache=v2)
 
-## 타입스크립트의 동작 과정
+### 타입스크립트의 동작 과정
 
 ![타입스크립트동작과정](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F45b2f6da-ce1d-4d0a-8daf-a8bad82b83cc%2FUntitled.png?table=block&id=44d3137a-00c1-4e1d-9351-02e4bc2cf90b&cache=v2)
 
