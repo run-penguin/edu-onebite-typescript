@@ -189,3 +189,44 @@ let user: {
 
 user.name = "dskfd"; // 오류 발생
 ```
+
+# 타입 별칭과 인덱스 시그니처
+
+## 타입 별칭 (Type Alias)
+
+'type 타입_이름 = 타입' 형태로 타입을 별도로 정의하여 사용할 수 있음
+
+```typescript
+type User = {
+    id: number;
+    name: string;
+    nickname: string;
+    birth: string;
+    bio: string;
+    location: string;
+}
+```
+
+> 변수 선언과 마찬가지로 동일한 스코프에 동일한 이름의 타입 별칭을 선언할 수 없음
+
+## 인덱스 시그니처 (Index Signature)
+
+- 객체 타입을 유연하게 정의할 수 있도록 돕는 특수한 문법
+- 아래는 key 타입이 string, value 타입이 string
+
+```typescript
+type CountryCodes = {
+    [key: string]: string;
+};
+```
+
+반드시 포함해야 하는 프로퍼티가 있다면 아래와 같이 명시
+
+```typescript
+type CountryCodes = {
+    [key: string]: string;
+    Korea: string;
+};
+```
+
+> 인덱스 시그니처의 value 타입과 직접 추가한 프로퍼티의 value 타입이 호환(일치)해야 함
