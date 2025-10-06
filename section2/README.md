@@ -230,3 +230,59 @@ type CountryCodes = {
 ```
 
 > 인덱스 시그니처의 value 타입과 직접 추가한 프로퍼티의 value 타입이 호환(일치)해야 함
+
+
+# 열거형(Enum) 타입
+
+- 자바스크립트에는 존재하지 않고 타입스크립트에서만 사용할 수 있는 특별한 타입
+- 열거형은 다음과 같이 여러개의 값을 나열하는 용도로 사용함
+
+```typescript
+enum Role {
+    ADMIN,
+    USER,
+    GUEST,
+}
+```
+
+- 각 멤버에는 숫자를 할당할 수 있으며, 할당하지 않은 경우 0부터 1씩 늘어나는 값으로 자동 할당됨
+
+```typescript
+enum Role {
+    ADMIN = 0,
+    USER = 1,
+    GUEST = 2,
+}
+```
+
+- 자동 할당되는 값의 시작 값을 변경하고 싶은 경우, 시작하는 위치에 직접 할당
+
+```typescript
+enum Role {
+  ADMIN,      // 0 할당 (자동)
+  USER = 10,  // 10 할당
+  GUEST,      // 11 할당 (자동)
+}
+```
+
+## 문자열 열거형
+
+- 모든 멤버의 값이 문자열 값인 enum
+- 오타 발생 방지
+
+```typescript
+enum Language {
+    korean = "ko",
+    english = "en",
+}
+
+const user1 = {
+  name: "이정환",
+  role: Role.ADMIN, // 0
+  language: Language.korean,// "ko"
+};
+```
+
+## enum은 컴파일 결과 객체로 변환
+
+다른 타입들처럼 사라지지 않고 자바스크립트 객체로 변환됨
