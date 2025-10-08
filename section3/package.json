@@ -1,0 +1,14 @@
+{
+  "name": "section3",
+  "version": "1.0.0",
+  "description": "타입스크립트의 타입은 여러 개의 값을 포함하는 '집합'이며, '집합'은 동일한 속성을 갖는 여러개의 요소들을 하나의 그룹으로 묶은 단위이다.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^24.7.0"
+  }
+}
