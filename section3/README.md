@@ -91,3 +91,83 @@ function voidExam() {
 - 모든 타입의 슈퍼 타입이 될 수도 있고, 서브 타입이 될 수도 있음
 - 예외로 never에는 할당할 수는 없음!
 
+
+
+
+# 객체 타입의 호환성
+
+- 객체 타입간의 호환성도 슈퍼-서브 타입 관계를 가지며, 업캐스팅은 허용하고 다운캐스팅은 허용하지 않음
+
+```typescript
+type Animal = {
+    name: string;
+    color: string;
+};
+
+type Dog = {
+    name: string;
+    color: string;
+    breed: string;
+}
+
+let animal: Animal = {
+    name: "기린",
+    color: "yellow"
+};
+
+let dog: Dog = {
+    name: "돌돌이",
+    color: "brown",
+    breed: "진도"
+}
+
+animal = dog;
+// dog = animal;
+```
+
+1. Animal 타입은 name, color 프로퍼티를 갖는 모든 객체들을 포함하는 집합
+2. Dog 타입은 name, color, breed 프로터피를 갖는 모든 객체들을 포함하는 집합
+=> 따라서 Dog 타입에 포함된다면 Animal 타입에 포함됨 (Animal = 슈퍼타입, Dog = 서브타입)
+
+
+### 초과 프로퍼티 검사
+
+- 변수를 객체 리터럴로 초기화할 때 발동하는 타입스크립트의 특수한 기능
+- 타입에 정의된 프로퍼티 외의 추가 프로퍼티가 포함된 객체를 할당할 수 없음
+
+```typescript
+type Book = {
+    name: string;
+    price: number;
+};
+
+type ProgrammingBook = {
+    name: string;
+    price: number;
+    skill: string;
+};
+
+let book2: Book = {
+    name: "한 입 크기로 잘라먹는 리액트",
+    price: 33000,
+    // skill: "reactjs"
+}
+```
+
+Book 타입으로 정의된 변수에 ProgrammingBook으로 보이는 초기값을 설정했으나 오류 발생 => '초과 프로퍼티 검사' 발동
+
+> 변수 초기화 시 객체 리터럴을 사용하지 않으면 발생하지 않음! (함수의 매개변수에도 동일)
+
+```typescript
+let book3: Book = programmingBook;
+```
+
+```typescript
+function func(book: Book) {}
+func({
+    name: "한 입 크기로 잘라먹는 리액트",
+    price: 33000,
+    // skill: "reactjs"
+});
+func(programmingBook);
+```
