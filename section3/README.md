@@ -171,3 +171,91 @@ func({
 });
 func(programmingBook);
 ```
+
+
+
+# 대수 타입(Algebraic type)
+
+여러개의 타입을 합성해서 만드는 타입
+
+### 합집합 (Union) 타입
+
+- 바(|)를 이용하여 정의할 수 있으며, 정의할 수 있는 타입의 개수 제한이 없음
+- 정의된 타입에 포함되는 값을 할당 가능 (OR)
+
+```typescript
+let a: string | number | boolean;
+
+let arr: (number | string | boolean)[] = [1, "hello", true];
+```
+
+```typescript
+type Dog = {
+    name: string;
+    color: string;
+};
+
+type Person = {
+    name: string;
+    language: string;
+};
+
+type Union1 = Dog | Person;
+
+let union1: Union1 = {
+    name: "",
+    color: ""
+};
+
+let union2: Union1 = {
+    name: "",
+    language: ""
+};
+
+let union3: Union1 = {
+    name: "",
+    color: "",
+    language: ""
+};
+```
+
+-> Dog 타입이거나 Person 타입이거나 둘 다 포함이거나 (O)
+
+```typescript
+let union4: Union1 = {
+  name: "",
+};
+```
+
+-> 이런 객체는 포함되지 않음 (X)
+
+
+
+### 교집합 (Intersection) 타입
+
+- &를 이용하여 정의
+- 정의된 타입에 모두 포함되는 값을 할당 가능 (AND)
+
+```typescript
+let variable : number & string;  // never 타입으로 추론
+```
+
+```typescript
+type Dog = {
+    name: string;
+    color: string;
+};
+
+type Person = {
+    name: string;
+    language: string;
+};
+
+type Intersection = Dog & Person;
+
+let intersection1 : Intersection = {
+    name: "",
+    color: "",
+    language: ""
+}
+```
