@@ -8,6 +8,7 @@
 6. [타입 추론](#타입-추론)
 7. [타입 단언](#타입-단언)
 8. [타입 좁히기](#타입-좁히기)
+9. [서로소 유니온 타입](#서로소-유니온-타입)
 
 ## 타입은 집합이다
 
@@ -533,6 +534,97 @@ function func(value: number | string | Date | null | Person) {
     console.log(value.getTime());
   } else if (value && "age" in value) {
     console.log(`${value.name}은 ${value.age}살 입니다.`);
+  }
+}
+```
+
+## 서로소 유니온 타입
+
+교집합이 없는 타입들(서로소 관계에 있는 타입들)을 모아 만든 유니온 타입
+
+```typescript
+type Admin = {
+  name: string;
+  kickCount: number;
+};
+
+type Member = {
+  name: string;
+  point: number;
+};
+
+type Guest = {
+  name: string;
+  visitCount: number;
+};
+
+type User = Admin | Member | Guest;
+
+function login(user: User) {
+  if ("kickCount" in user) {
+    // Admin
+    console.log(`${user.name}님 현재까지 ${user.kickCount}명 추방했습니다`);
+  } else if ("point" in user) {
+    // Member
+    console.log(`${user.name}님 현재까지 ${user.point}모았습니다`);
+  } else {
+    // Guest
+    console.log(`${user.name}님 현재까지 ${user.visitCount}번 오셨습니다`);
+  }
+}
+```
+
+-> 어떤 타입으로 좁혀지는지 직관적이지 않음
+
+```typescript
+type Admin = {
+  tag: "ADMIN";
+  name: string;
+  kickCount: number;
+};
+
+type Member = {
+  tag: "MEMBER";
+  name: string;
+  point: number;
+};
+
+type Guest = {
+  tag: "GUEST";
+  name: string;
+  visitCount: number;
+};
+```
+
+-> tag 프로퍼티가 String Literal 타입으로 각 집합이 고유하게 구분되어 아래와 같이 작성할 수 있음
+
+```typescript
+function login(user: User) {
+  if (user.tag === "ADMIN") {
+    console.log(`${user.name}님 현재까지 ${user.kickCount}명 추방했습니다`);
+  } else if (user.tag === "MEMBER") {
+    console.log(`${user.name}님 현재까지 ${user.point}모았습니다`);
+  } else {
+    console.log(`${user.name}님 현재까지 ${user.visitCount}번 오셨습니다`);
+  }
+}
+```
+
+```typescript
+function login(user: User) {
+  switch (user.tag) {
+    case "ADMIN": {
+      console.log(`${user.name}님 현재까지 ${user.kickCount}명 추방했습니다`);
+      break;
+    }
+    case "MEMBER": {
+      console.log(`${user.name}님 현재까지 ${user.point}모았습니다`);
+      break;
+    }
+    case "GUEST": {
+      console.log(`${user.name}님 현재까지 ${user.visitCount}번 오셨습니다`);
+      break;
+    }
   }
 }
 ```
