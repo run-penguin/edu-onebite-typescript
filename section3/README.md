@@ -7,6 +7,7 @@
 5. [대수 타입](#대수-타입algebraic-type)
 6. [타입 추론](#타입-추론)
 7. [타입 단언](#타입-단언)
+8. [타입 좁히기](#타입-좁히기)
 
 ## 타입은 집합이다
 
@@ -447,4 +448,91 @@ let post: Post = {
 };
 
 const len: number = post.author!.length; // author가 비어있지 않다고 단언
+```
+
+## 타입 좁히기
+
+```typescript
+function func(value: number | string) {
+  value.toFixed(); // 오류
+  value.toUpperCase(); // 오류
+}
+```
+
+위의 함수에서 매개변수 value의 타입이 보장되지 않아 오류가 발생함
+
+```typescript
+function func(value: number | string) {
+  if (typeof value === "number") {
+    console.log(value.toFixed());
+  }
+}
+```
+
+조건문을 이용해 value가 number 타입임을 보장해주면 오류가 발생하지 않음
+
+- 조건문을 이용해 조건문 내부에서 변수가 특정 타입임을 보장하면, 보장된 타입으로 좁혀지므로 '타입 좁히기'라고 함
+- if (typeof === ...) 처럼 조건문과 함께 사용해 타입을 좁히는 이런 표현들을 '타입 가드'라고 함
+
+=> '타입 가드'를 이용해 '타입 좁히기'를 할 수 있다
+
+### instanceof 타입 가드
+
+instanceof를 이용하면 내장 클래스 타입을 보장할 수 있는 타입가드를 만들 수 있음
+
+```typescript
+function func(value: number | string | Date | null) {
+  if (typeof value === "number") {
+    console.log(value.toFixed());
+  } else if (typeof value === "string") {
+    console.log(value.toUpperCase());
+  } else if (value instanceof Date) {
+    console.log(value.getTime());
+  }
+}
+```
+
+### in 타입 가드
+
+instanceof는 내장 클래스 또는 직접 만든 클래스에만 사용이 가능한 연산이므로, 직접 만든 타입과 함께 사용할 수 없음
+
+```typescript
+type Person = {
+  name: string;
+  age: number;
+};
+
+function func(value: number | string | Date | null | Person) {
+  if (typeof value === "number") {
+    console.log(value.toFixed());
+  } else if (typeof value === "string") {
+    console.log(value.toUpperCase());
+  } else if (value instanceof Date) {
+    console.log(value.getTime());
+  } else if (value instanceof Person) {
+    // 오류 발생
+    console.log(`${value.name}은 ${value.age}살 입니다.`);
+  }
+}
+```
+
+직접 만든 타입과 함께 사용하려면 in 연산자 사용
+
+```typescript
+type Person = {
+  name: string;
+  age: number;
+};
+
+function func(value: number | string | Date | null | Person) {
+  if (typeof value === "number") {
+    console.log(value.toFixed());
+  } else if (typeof value === "string") {
+    console.log(value.toUpperCase());
+  } else if (value instanceof Date) {
+    console.log(value.getTime());
+  } else if (value && "age" in value) {
+    console.log(`${value.name}은 ${value.age}살 입니다.`);
+  }
+}
 ```
