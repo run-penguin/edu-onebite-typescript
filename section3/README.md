@@ -6,6 +6,7 @@
 4. [객체 타입의 호환성](#객체-타입의-호환성)
 5. [대수 타입](#대수-타입algebraic-type)
 6. [타입 추론](#타입-추론)
+7. [타입 단언](#타입-단언)
 
 ## 타입은 집합이다
 
@@ -350,4 +351,100 @@ const str = "hello"; // "hello" String Literal 타입으로 추론
 
 ```typescript
 let arr = [1, "string"]; // (string | number)[] 타입으로 추론
+```
+
+## 타입 단언
+
+'값 as 타입'으로 특정 값을 원하는 타입으로 단언
+
+```typescript
+type Person = {
+  name: string;
+  age: number;
+};
+
+let person: Person = {};
+person.name = "";
+person.age = 23;
+```
+
+-> 초기화 할 때 빈 객체를 넣는 경우 에러 발생함. 이때 아래와 같이 단언할 수 있음.
+
+```typescript
+type Person = {
+  name: string;
+  age: number;
+};
+
+let person = {} as Person;
+person.name = "이정환";
+person.age = 27;
+```
+
+아래는 breed라는 초과 프로퍼티가 존재하지만 Dog 타입으로 단언하여 초과 프로퍼티 검사를 피할 수 있음
+
+```typescript
+type Dog = {
+  name: string;
+  color: string;
+};
+
+let dog = {
+  name: "돌돌이",
+  color: "brown",
+  breed: "진도",
+} as Dog;
+```
+
+### 타입 단언의 조건
+
+'값 as 타입' 형식의 단언식을 A as B로 표현했을 때 아래의 두 가지 조건 중 한가지를 만족해야 함
+
+1. A가 B의 슈퍼 타입이다
+2. A가 B의 서브 타입이다
+
+```typescript
+let num1 = 10 as never; // O
+let num2 = 10 as unknown; // O
+
+let num3 = 10 as string; // X
+```
+
+### 다중 단언
+
+- 다중 단언을 사용하면 불가능했던 단언을 가능하도록 만들어줄 수도 있음
+- 매우 좋지 않은 방식!!
+
+```typescript
+let num3 = 10 as unknown as string;
+```
+
+### const 단언
+
+특정 값을 const 타입으로 단언하면 변수를 const로 선언한 것과 비슷하게 타입이 변경됨
+
+```typescript
+let num4 = 10 as const; // 10 Number Literal 타입으로 단언
+
+let cat = {
+  name: "야옹이",
+  color: "yellow",
+} as const; // 모든 프로퍼티가 readonly를 갖도록 단언
+```
+
+### Non Null 단언
+
+값 뒤에 !를 붙여주면 이 값이 undefined이거나 null이 아닐것으로 단언 가능
+
+```typescript
+type Post = {
+  title: string;
+  author?: string; // 필수 속성 아님
+};
+
+let post: Post = {
+  title: "게시글1",
+};
+
+const len: number = post.author!.length; // author가 비어있지 않다고 단언
 ```
