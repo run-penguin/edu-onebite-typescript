@@ -1,21 +1,26 @@
+# 목차
 
-# 타입은 집합이다
+1. [타입은 집합이다](#타입은-집합이다)
+2. [타입 호환성](#타입-호환성)
+3. [타입 계층도](#타입-계층도)
+4. [객체 타입의 호환성](#객체-타입의-호환성)
+5. [대수 타입](#대수-타입algebraic-type)
+6. [타입 추론](#타입-추론)
 
+## 타입은 집합이다
 
 타입스크립트의 타입은 여러 개의 값을 포함하는 '집합'이며, '집합'은 동일한 속성을 갖는 여러개의 요소들을 하나의 그룹으로 묶은 단위이다.
-
 
 1. Number 타입 -> 숫자 값들을 묶어놓은 집합
 2. Number Literal 타입 -> 하나의 숫자 값만 포함하는 타입
 3. Number Literal 타입은 Number 타입이라는 거대한 집합에 포함되는 부분 집합
 
 - 타입스크립트의 모든 타입들은 집합으로써 서로 포함하고 포함되는 관계를 갖는다.
-- Number 타입처럼 다른 타입을 포함하는 타입을 ***슈퍼 타입(부모 타입)***이라고 하며, 반대로는 ***서브 타입(자식 타입)***이라고 한다.
+- Number 타입처럼 다른 타입을 포함하는 타입을 **_슈퍼 타입(부모 타입)_**이라고 하며, 반대로는 **_서브 타입(자식 타입)_**이라고 한다.
 
 ![부모타입_자식타입](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff474bc02-bad2-40d8-ae0f-21503e4ecdb9%2FUntitled.png?table=block&id=2fd0b889-a6a7-4064-82c2-f707e202638b&cache=v2)
 
-
-# 타입 호환성
+## 타입 호환성
 
 A, B 두개의 타입이 존재할 때 A 타입의 값을 B 타입으로 취급해도 괜찮은지 판단하는 것
 
@@ -23,8 +28,7 @@ A, B 두개의 타입이 존재할 때 A 타입의 값을 B 타입으로 취급�
 
 ![캐스팅](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F42382978-4468-424e-a3ea-95b6747653ca%2FUntitled.png?table=block&id=53270154-fdd5-45fd-ad96-579ec8f10c0a&cache=v2)
 
-
-# 타입 계층도
+## 타입 계층도
 
 ### unknown 타입
 
@@ -91,35 +95,32 @@ function voidExam() {
 - 모든 타입의 슈퍼 타입이 될 수도 있고, 서브 타입이 될 수도 있음
 - 예외로 never에는 할당할 수는 없음!
 
-
-
-
-# 객체 타입의 호환성
+## 객체 타입의 호환성
 
 - 객체 타입간의 호환성도 슈퍼-서브 타입 관계를 가지며, 업캐스팅은 허용하고 다운캐스팅은 허용하지 않음
 
 ```typescript
 type Animal = {
-    name: string;
-    color: string;
+  name: string;
+  color: string;
 };
 
 type Dog = {
-    name: string;
-    color: string;
-    breed: string;
-}
+  name: string;
+  color: string;
+  breed: string;
+};
 
 let animal: Animal = {
-    name: "기린",
-    color: "yellow"
+  name: "기린",
+  color: "yellow",
 };
 
 let dog: Dog = {
-    name: "돌돌이",
-    color: "brown",
-    breed: "진도"
-}
+  name: "돌돌이",
+  color: "brown",
+  breed: "진도",
+};
 
 animal = dog;
 // dog = animal;
@@ -127,8 +128,7 @@ animal = dog;
 
 1. Animal 타입은 name, color 프로퍼티를 갖는 모든 객체들을 포함하는 집합
 2. Dog 타입은 name, color, breed 프로터피를 갖는 모든 객체들을 포함하는 집합
-=> 따라서 Dog 타입에 포함된다면 Animal 타입에 포함됨 (Animal = 슈퍼타입, Dog = 서브타입)
-
+   => 따라서 Dog 타입에 포함된다면 Animal 타입에 포함됨 (Animal = 슈퍼타입, Dog = 서브타입)
 
 ### 초과 프로퍼티 검사
 
@@ -137,21 +137,21 @@ animal = dog;
 
 ```typescript
 type Book = {
-    name: string;
-    price: number;
+  name: string;
+  price: number;
 };
 
 type ProgrammingBook = {
-    name: string;
-    price: number;
-    skill: string;
+  name: string;
+  price: number;
+  skill: string;
 };
 
 let book2: Book = {
-    name: "한 입 크기로 잘라먹는 리액트",
-    price: 33000,
-    // skill: "reactjs"
-}
+  name: "한 입 크기로 잘라먹는 리액트",
+  price: 33000,
+  // skill: "reactjs"
+};
 ```
 
 Book 타입으로 정의된 변수에 ProgrammingBook으로 보이는 초기값을 설정했으나 오류 발생 => '초과 프로퍼티 검사' 발동
@@ -165,16 +165,14 @@ let book3: Book = programmingBook;
 ```typescript
 function func(book: Book) {}
 func({
-    name: "한 입 크기로 잘라먹는 리액트",
-    price: 33000,
-    // skill: "reactjs"
+  name: "한 입 크기로 잘라먹는 리액트",
+  price: 33000,
+  // skill: "reactjs"
 });
 func(programmingBook);
 ```
 
-
-
-# 대수 타입(Algebraic type)
+## 대수 타입(Algebraic type)
 
 여러개의 타입을 합성해서 만드는 타입
 
@@ -191,31 +189,31 @@ let arr: (number | string | boolean)[] = [1, "hello", true];
 
 ```typescript
 type Dog = {
-    name: string;
-    color: string;
+  name: string;
+  color: string;
 };
 
 type Person = {
-    name: string;
-    language: string;
+  name: string;
+  language: string;
 };
 
 type Union1 = Dog | Person;
 
 let union1: Union1 = {
-    name: "",
-    color: ""
+  name: "",
+  color: "",
 };
 
 let union2: Union1 = {
-    name: "",
-    language: ""
+  name: "",
+  language: "",
 };
 
 let union3: Union1 = {
-    name: "",
-    color: "",
-    language: ""
+  name: "",
+  color: "",
+  language: "",
 };
 ```
 
@@ -229,33 +227,127 @@ let union4: Union1 = {
 
 -> 이런 객체는 포함되지 않음 (X)
 
-
-
 ### 교집합 (Intersection) 타입
 
 - &를 이용하여 정의
 - 정의된 타입에 모두 포함되는 값을 할당 가능 (AND)
 
 ```typescript
-let variable : number & string;  // never 타입으로 추론
+let variable: number & string; // never 타입으로 추론
 ```
 
 ```typescript
 type Dog = {
-    name: string;
-    color: string;
+  name: string;
+  color: string;
 };
 
 type Person = {
-    name: string;
-    language: string;
+  name: string;
+  language: string;
 };
 
 type Intersection = Dog & Person;
 
-let intersection1 : Intersection = {
-    name: "",
-    color: "",
-    language: ""
+let intersection1: Intersection = {
+  name: "",
+  color: "",
+  language: "",
+};
+```
+
+## 타입 추론
+
+- 타입스크립트는 타입이 정의되어 있지 않은 변수의 타입을 자동으로 추론
+- 모든 변수에 일일이 타입을 정의하지 않아도 되는 편리함 제공
+
+```typescript
+let a = 10; // number 타입으로 추론
+```
+
+그러나 모든 상황에 추론이 되는 것은 아님
+
+```typescript
+function func(param) {} // 오류
+```
+
+- 위와 같이 타입 추론이 불가능한 변수(매개변수)에는 암시적으로 any 타입이 추론
+- 엄격한 타입 검사 모드에서는 오류로 판단함
+
+### 타입 추론이 가능한 상황
+
+1. 변수 선언
+
+```typescript
+let a = 10;
+let b = "hello";
+let c = {
+  id: 1,
+  name: "이정환",
+  profile: {
+    nickname: "winterlood",
+  },
+  urls: ["https://winterlood.com"],
+};
+```
+
+2. 구조 분해 할당
+
+```typescript
+let { id, name, profile } = c;
+
+let [one, two, three] = [1, "hello", true];
+```
+
+3. 함수의 반환 값
+
+```typescript
+function func() {
+  return "hello"; // return 문을 기준으로 추론
 }
+```
+
+4. 기본 값이 설정된 매개변수
+
+```typescript
+function func(message = "hello") {
+  return "hello";
+}
+```
+
+### 주의해야 할 상황
+
+1. 암시적 any 타입
+
+변수를 선언할 때 초기값을 생략하면 암시적 any 타입으로 추론
+
+```typescript
+let d;
+d = 10; // any -> number
+d.toFixed();
+
+d = "hello"; // number -> string
+d.toUpperCase();
+d.toFixed(); // 오류
+```
+
+코드의 흐름에 따라 타입이 계속 변화 (=any의 진화)
+
+> 명시적으로 any 타입을 할당했을 때는 toFixed(), toUpperCase() 등 각 타입에서만 사용할 수 있는 메서드 호출이 모두 가능하지만, 암시적 any 타입일 때는 해당 타입으로 진화하여 불가능해진다.
+
+2. const 상수의 추론
+
+상수는 초기화 때 설정한 값을 변경할 수 없기 때문에 가장 좁은 타입으로 추론
+
+```typescript
+const num = 10; // 10 Number Literal 타입으로 추론
+const str = "hello"; // "hello" String Literal 타입으로 추론
+```
+
+### 최적 공통 타입
+
+다양한 타입의 요소를 담은 배열을 변수의 초기값으로 설정하면, 최적의 공통 타입으로 추론됨
+
+```typescript
+let arr = [1, "string"]; // (string | number)[] 타입으로 추론
 ```
