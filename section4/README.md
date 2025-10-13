@@ -90,3 +90,51 @@ function getSum(...rest: [number, number, number]) {
 getSum(1, 2, 3); // O
 getSum(1, 2, 3, 4); // X
 ```
+
+## 함수 타입 표현식
+
+함수의 타입을 타입 별칭과 함께 별도로 정의
+
+```typescript
+type Add = (a: number, b: number) => number;
+
+const add: Add = (a, b) => a + b;
+```
+
+아래와 같이 여러개의 함수가 동일한 타입을 갖는 경우 요긴하게 사용 가능
+
+```typescript
+type Operation = (a: number, b: number) => number;
+
+const add: Operation = (a, b) => a + b;
+const sub: Operation = (a, b) => a - b;
+const multiply: Operation = (a, b) => a * b;
+const divide: Operation = (a, b) => a / b;
+```
+
+타입 별칭 없이 함수 타입 표현식을 사용도 가능
+
+```typescript
+const add: (a: number, b: number) => number = (a, b) => a + b;
+```
+
+## 호출 시그니처 (Call Signature)
+
+함수의 타입을 별도로 정의하는 방식
+
+```typescript
+type Operation2 = {
+  (a: number, b: number): number;
+  name: string;
+};
+
+const add2: Operation2 = (a, b) => a + b;
+const sub2: Operation2 = (a, b) => a - b;
+const multiply2: Operation2 = (a, b) => a * b;
+const divide2: Operation2 = (a, b) => a / b;
+
+add2(1, 2);
+add2.name;
+```
+
+함수도 객체이므로 객체를 정의하듯 함수의 타입을 별도로 정의할 수 있으며, 프로퍼티를 추가하는 것 또한 가능함
