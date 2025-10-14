@@ -138,3 +138,87 @@ add2.name;
 ```
 
 함수도 객체이므로 객체를 정의하듯 함수의 타입을 별도로 정의할 수 있으며, 프로퍼티를 추가하는 것 또한 가능함
+
+## 함수 타입의 호환성
+
+특정 함수 타입을 다른 함수 타입으로 취급해도 괜찮은지 판단하는 것
+
+1. 두 함수의 반환값 타입이 호환되는가?
+2. 두 함수의 매개변수 타입이 호환되는가?
+
+### 기준1. 반환값 타입이 호환되는가?
+
+```typescript
+type A = () => number;
+type B = () => 10;
+
+let a: A = () => 10;
+let b: B = () => 10;
+
+a = b; // O
+b = a; // X => number 타입을 number literal 타입으로 취급하려고 해서 안됨 (다운캐스팅)
+```
+
+### 기준2. 매개변수의 타입이 호환되는가?
+
+#### 2-1. 매개변수의 개수가 같을 때
+
+```typescript
+type C = (value: number) => void;
+type D = (value: 10) => void;
+
+let c: C = (value) => {};
+let d: D = (value) => {};
+
+c = d; // X
+d = c; // O
+```
+
+매개변수의 타입이 호환되는지 체크할 때, 오히려 업캐스팅은 안되고 다운캐스팅은 가능함.
+
+이 특징은 아래와 같이 매개변수의 타입이 객체일 때 두드러짐.
+
+```typescript
+type Animal = {
+  name: string;
+};
+
+type Dog = {
+  name: string;
+  color: string;
+};
+
+let animalFunc = (animal: Animal) => {
+  console.log(animal.name);
+};
+
+let dogFunc = (dog: Dog) => {
+  console.log(dog.name);
+  console.log(dog.color);
+};
+
+animalFunc = dogFunc; // X
+dogFunc = animalFunc; // O
+```
+
+프로퍼티가 더 많은 Dog 타입을 Animal 타입으로 취급하면, 함수 내에서 프로퍼티를 호출할 때 문제가 생김
+
+```typescript
+let testFunc = (animal: Animal) => {
+  console.log(animal.name);
+  console.log(animal.color); // 오류 발생
+};
+```
+
+#### 2-2. 매개변수의 개수가 다를 때
+
+```typescript
+type Func1 = (a: number, b: number) => void;
+type Func2 = (a: number) => void;
+
+let func1: Func1 = (a, b) => {};
+let func2: Func2 = (a) => {};
+
+func1 = func2; // O
+func2 = func1; // X
+```
