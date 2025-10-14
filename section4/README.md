@@ -253,3 +253,55 @@ func(1, 2, 3);
 구현 시그니처 : 실제로 함수가 어떻게 실행될 것인지 정의하는 부분
 
 > 구현 시그니처의 매개변수 타입은 모든 오버로드 시그니처와 호환되어야 함!
+
+## 사용자 정의 타입가드
+
+true/false를 반환하는 함수를 이용해 타입 가드를 만들 수 있도록 도와주는 문법
+
+```typescript
+type Dog = {
+  name: string;
+  isBark: boolean;
+};
+
+type Cat = {
+  name: string;
+  isScratch: boolean;
+};
+
+type Animal = Dog | Cat;
+
+function warning(animal: Animal) {
+  if ("isBark" in animal) {
+    console.log(animal.isBark ? "짖습니다" : "안짖어요");
+  } else if ("isScratch" in animal) {
+    console.log(animal.isScratch ? "할큅니다" : "안할퀴어요");
+  }
+}
+```
+
+// isBark -> isBarked로 이름이 수정된다면 제대로 동작하지 않음
+
+```typescript
+// Dog 타입인지 확인하는 타입 가드
+function isDog(animal: Animal): animal is Dog {
+  return (animal as Dog).isBark !== undefined;
+}
+
+// Cat 타입인지 확인하는 타입가드
+function isCat(animal: Animal): animal is Cat {
+  return (animal as Cat).isScratch !== undefined;
+}
+
+function warning(animal: Animal) {
+  if (isDog(animal)) {
+    console.log(animal.isBark ? "짖습니다" : "안짖어요");
+  } else {
+    console.log(animal.isScratch ? "할큅니다" : "안할퀴어요");
+  }
+}
+```
+
+isDog 함수는 매개변수로 받은 값이 Dog 타입이라면 true, 아니라면 false를 반환함.
+
+반환값의 타입으로 'animal is Dog'을 정의하여 함수가 true를 반환하면, 조건문 내부에서는 이 값이 Dog 타입임을 보장한다는 의미가 됨
