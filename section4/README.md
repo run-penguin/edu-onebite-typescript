@@ -222,3 +222,34 @@ let func2: Func2 = (a) => {};
 func1 = func2; // O
 func2 = func1; // X
 ```
+
+## 함수 오버로딩
+
+하나의 함수를 매개변수의 개수나 타입에 따라 다르게 동작하도록 만드는 문법
+
+```typescript
+// 오버로드 시그니처
+function func(a: number): void;
+function func(a: number, b: number, c: number): void;
+```
+
+오버로드 시그니처 : 구현부 없이 선언부만 만들어둔 함수
+
+```typescript
+// 구현 시그니처
+function func(a: number, b?: number, c?: number) {
+  if (typeof b === "number" && typeof c === "number") {
+    console.log(a + b + c);
+  } else {
+    console.log(a * 20);
+  }
+}
+
+func(1);
+// func(1, 2); // X
+func(1, 2, 3);
+```
+
+구현 시그니처 : 실제로 함수가 어떻게 실행될 것인지 정의하는 부분
+
+> 구현 시그니처의 매개변수 타입은 모든 오버로드 시그니처와 호환되어야 함!
