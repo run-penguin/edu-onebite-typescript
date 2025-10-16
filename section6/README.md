@@ -1,0 +1,97 @@
+# 목차
+
+1. [자바스크립트의 클래스](#자바스크립트의-클래스)
+
+## 자바스크립트의 클래스
+
+동일한 모양의 객체를 쉽게 생성하도록 도와주는 문법
+
+### 클래스 선언
+
+```javascript
+class Student {
+  // 필드
+  name;
+  age;
+  grade;
+
+  // 생성자
+  constructor(name, grade, age) {
+    this.name = name;
+    this.grade = grade;
+    this.age = age;
+  }
+
+  // 메서드
+  study() {
+    console.log("열심히 공부함");
+  }
+
+  introduce() {
+    console.log(`안녕하세요! ${this.name} 입니다.`);
+  }
+}
+```
+
+#### 필드
+
+- 클래스가 생성할 객체가 갖는 프로퍼티
+
+#### 생성자
+
+- 객체를 생성하는 함수
+- 매개변수로 프로퍼티의 값을 받아 this.프로퍼티의 값으로 할당함
+- 이때 this는 현재 만들고 있는 개체를 의미함
+
+#### 객체 생성
+
+```javascript
+const studentB = new Student("홍길동", "A+", 27);
+```
+
+### this 활용
+
+```javascript
+class Student {
+  (...)
+
+  introduce() {
+    console.log(`안녕하세요 ${this.name} 입니다!`);
+  }
+}
+
+let studentB = new Student("홍길동", "A+", 27);
+
+studentB.introduce(); // 안녕하세요 이정환 입니다!
+```
+
+### 상속
+
+- 상속을 이용하여 앞서 만든 클래스를 기반으로 추가적인 필드와 메서드를 갖는 클래스를 선언할 수 있음
+- 인터페이스의 확장과 기본적으로 비슷하며, 상속받은 클래스의 모든 필드와 메서드를 자동으로 가지게 됨
+
+```javascript
+class StudentDeveloper extends Student {}
+```
+
+- 새로운 필드나 메서드도 같이 정의할 수 있음
+
+```javascript
+class StudentDeveloper extends Student {
+  // 필드
+  favoriteSkill;
+
+  // 생성자
+  constructor(name, grade, age, favoriteSkill) {
+    super(name, grade, age); // Student 클래스의 생성자 호출
+    this.favoriteSkill = favoriteSkill;
+  }
+
+  // 메서드
+  programming() {
+    console.log(`${this.favoriteSkill}로 프로그래밍 함`);
+  }
+}
+```
+
+> 이때 Student 클래스의 생성자를 호출하지 않으면 name, grade, age 값이 제대로 설정되지 않음

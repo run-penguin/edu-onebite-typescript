@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "outDir": "dist",
+        "moduleDetection": "force",
+        "skipLibCheck": true,
+        "strict": true,
+        "allowJs": true, // include 내에 JavaScript 허용
+    },
+    "include": ["src"]
+}
