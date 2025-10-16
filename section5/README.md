@@ -134,3 +134,91 @@ const person: Person & string = {
   age: 27,
 };
 ```
+
+## 인터페이스 확장
+
+하나의 인터페이스를 다른 인터페이스들이 상속받아 중복된 프로퍼티를 정의하지 않도록 도와주는 문법
+
+```typescript
+interface Animal {
+  name: string;
+  color: string;
+}
+
+interface Dog extends Animal {
+  breed: string;
+}
+
+interface Cat extends Animal {
+  isScratch: boolean;
+}
+
+interface Chicken extends Animal {
+  isFly: boolean;
+}
+
+const dog: Dog = {
+  name: "돌돌이",
+  color: "brown",
+  breed: "진도",
+};
+```
+
+### 프로퍼티 재정의
+
+```typescript
+interface Animal {
+  name: string;
+  color: string;
+}
+
+interface Dog extends Animal {
+  name: "doldol"; // 타입 재 정의
+  breed: string;
+}
+```
+
+- Dog 타입은 Animal 타입을 확장하며 name 프로퍼티의 타입을 String -> String Literal 타입으로 재정의함
+- 프로퍼티를 재정의할 때 extends 대상이 슈퍼타입이어야 함
+
+```typescript
+interface Animal {
+  name: string;
+  color: string;
+}
+
+interface Dog extends Animal {
+  name: number; // X
+  breed: string;
+}
+```
+
+### 타입 별칭 확장
+
+인터페이스는 인터페이스 뿐만 아니라 타입 별칭으로 정의된 객체로 확장할 수 있음
+
+```typescript
+type Animal = {
+  name: string;
+  color: string;
+};
+
+interface Dog extends Animal {
+  breed: string;
+}
+```
+
+### 다중 확장
+
+여러 개의 인터페이스를 확장하는 것이 가능함
+
+```typescript
+interface DogCat extends Dog, Cat {}
+
+const dogCat: DogCat = {
+  name: "",
+  color: "",
+  breed: "",
+  isScratch: true,
+};
+```
