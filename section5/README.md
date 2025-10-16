@@ -1,6 +1,8 @@
 # 목차
 
 1. [인터페이스](#인터페이스)
+2. [인터페이스 확장](#인터페이스-확장)
+3. [선언 합침](#선언-합침)
 
 ## 인터페이스
 
@@ -221,4 +223,55 @@ const dogCat: DogCat = {
   breed: "",
   isScratch: true,
 };
+```
+
+## 선언 합침
+
+타입 별칭은 동일한 스코프 내에 중복된 이름으로 선언할 수 없는 반면 인터페이스는 가능함
+
+```typescript
+type Person = {
+  name: string;
+};
+
+// type 별칭 => 중복 선언 X
+type Person = {
+  age: number;
+};
+```
+
+```typescript
+interface Person {
+  name: string;
+}
+
+// interface => 중복 선언 O
+interface Person {
+  age: number;
+}
+```
+
+인터페이스 선언은 결국 모두 하나로 합쳐짐 => 선언 합침 (Declaration Merging)
+
+```typescript
+// 위 코드에 선언한 인터페이스들은 아래와 같이 합쳐짐
+interface Person {
+  name: string;
+  age: number;
+}
+```
+
+### 주의점
+
+동일한 이름의 프로퍼티를 다른 타입으로 정의한다면 오류 발생함
+
+```typescript
+interface Person {
+  name: string;
+}
+
+interface Person {
+  name: number; // X
+  age: number;
+}
 ```
