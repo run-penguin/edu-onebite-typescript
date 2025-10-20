@@ -178,3 +178,165 @@ class ExecutiveOfficer extends Employee {
   }
 }
 ```
+
+## 접근 제어자 (Access Modifier)
+
+클래스의 특정 필드나 메서드에 접근할 수 있는 범위를 설정하는 기능
+
+- public : 모든 범위 접근 가능
+- private : 클래스 내부에서만 접근 가능
+- protected: 클래스 내부, 파생 클래스 내부에서만 접근 가능
+
+### public
+
+- '공공의' 라는 뜻
+- 어디서든지 접근 가능
+- 접근 제어자를 지정하지 않으면 기본적으로 할당
+
+```typescript
+class Employee {
+  // 필드
+  name: string; // 자동으로 public
+  age: number; // 자동으로 public
+  public position: string; // 직접 public으로 명시
+
+  // 생성자
+  constructor(name: string, age: number, position: string) {
+    this.name = name;
+    this.age = age;
+    this.position = position;
+  }
+
+  // 메서드
+  work() {
+    console.log("일함");
+  }
+}
+
+const employee = new Employee("이정환", 27, "devloper");
+
+employee.name = "홍길동";
+employee.age = 30;
+employee.position = "디자이너";
+```
+
+### private
+
+- '제한된', '사적인'
+- 클래스 내부에서만 필드에 접근 가능
+
+```typescript
+class Employee {
+  // 필드
+  private name: string; // private 접근 제어자 설정
+  public age: number;
+  public position: string;
+
+  ...
+
+  // 메서드
+  work() {
+    console.log(`${this.name}이 일함`); // 여기서는 접근 가능
+  }
+}
+
+const employee = new Employee("이정환", 27, "devloper");
+
+employee.name = "홍길동"; // ❌ 오류
+employee.age = 30;
+employee.position = "디자이너";
+```
+
+### protected
+
+- private과 public의 중간
+- 클래스 외부에서는 접근이 안되지만 클래스 내부, 파생 클래스에서 접근 가능
+
+```typescript
+class Employee {
+  // 필드
+  private name: string; // private 접근 제어자 설정
+  protected age: number;
+  public position: string;
+
+  ...
+
+  // 메서드
+  work() {
+    console.log(`${this.name}이 일함`); // 여기서는 접근 가능
+  }
+}
+
+class ExecutiveOfficer extends Employee {
+ // 메서드
+  func() {
+    this.name; // ❌ 오류
+    this.age; // ✅ 가능
+  }
+}
+
+const employee = new Employee("이정환", 27, "devloper");
+
+employee.name = "홍길동"; // ❌ 오류
+employee.age = 30; // ❌ 오류
+employee.position = "디자이너";
+```
+
+### 필드 생략
+
+접근 제어자는 생성자의 매개변수에도 설정 가능
+
+```typescript
+class Employee {
+  // 생성자
+  constructor(
+    private name: string, // 생성자의 매개변수에 접근 제어자 설정
+    protected age: number, // 생성자의 매개변수에 접근 제어자 설정
+    public position: string // 생성자의 매개변수에 접근 제어자 설정
+  ) {
+    this.name = name;
+    this.age = age;
+    this.position = position;
+  }
+}
+```
+
+자동으로 필드에도 함께 선언되어, 필드에 직접 선언하는 경우 오류 발생함
+
+```typescript
+class Employee {
+  // 필드
+  private name: string; // 오류 발생 (삭제 필요)
+  protected age: number; // 오류 발생 (삭제 필요)
+  public position: string; // 오류 발생 (삭제 필요)
+
+  // 생성자
+  constructor(
+    private name: string,
+    protected age: number,
+    public position: string
+  ) {
+    this.name = name;
+    this.age = age;
+    this.position = position;
+  }
+}
+```
+
+접근 제어자가 설정된 매개변수들은 'this.필드 = 매개변수'가 자동 수행되므로, 아래와 같이 생성자 내부의 코드를 제거할 수 있음
+
+```typescript
+class Employee {
+  // 생성자
+  constructor(
+    private name: string,
+    protected age: number,
+    public position: string
+  ) {}
+
+  // 메서드
+  work() {
+    console.log(`${this.name} 일함`);
+  }
+}
+```
