@@ -1,6 +1,7 @@
 # 목차
 
 1. [자바스크립트의 클래스](#자바스크립트의-클래스)
+2. [타입스크립트의 클래스](#타입스크립트의-클래스)
 
 ## 자바스크립트의 클래스
 
@@ -95,3 +96,85 @@ class StudentDeveloper extends Student {
 ```
 
 > 이때 Student 클래스의 생성자를 호출하지 않으면 name, grade, age 값이 제대로 설정되지 않음
+
+## 타입스크립트의 클래스
+
+타입스크립트에서는 클래스의 필드를 선언할 때 타입을 정의하지 않는 경우, 암시적 any 타입으로 추론되어 엄격한 타입 검사 모드에서 오류가 발생함.
+
+- 생성자에서 각 필드의 값을 초기화하지 않을 경우 초기값도 함께 명시해야 함.
+
+```typescript
+class Employee {
+  // 필드
+  name: string = "";
+  age: number = 0;
+  position: string = "";
+
+  // 메서드
+  work() {
+    console.log("일함");
+  }
+}
+```
+
+- 생성자 함수에서 필드 값을 초기화한다면 필드에서는 선언 생략이 가능함
+- 특정 프로퍼티를 선택적 프로퍼티로 만들고 싶다면 물음표 추가
+
+```typescript
+class Employee {
+  // 필드
+  name: string;
+  age: number;
+  position?: string;
+
+  // 생성자
+  constructor(name: string, age: number, position: string) {
+    this.name = name;
+    this.age = age;
+    this.position = position;
+  }
+
+  // 메서드
+  work() {
+    console.log("일함");
+  }
+}
+```
+
+### 클래스는 타입
+
+클래스틑 타입으로 사용하면 해당 클래스가 생성하는 객체의 타입과 동일한 타입이 됨
+
+```typescript
+class Employee {
+  (...)
+}
+
+const employeeC: Employee = {
+  name: "",
+  age: 0,
+  position: "",
+  work() {},
+};
+```
+
+### 상속
+
+- 파생 클래스에서 생성자를 정의했다면 반드시 super 메서드를 호출하여 생성자를 호출해야 함
+- 호출 위치는 생성자의 최상단
+
+```typescript
+class ExecutiveOfficer extends Employee {
+  officeNumber: number;
+
+  constructor(
+    name: string,
+    age: number,
+    position: string,
+    officeNumber: number
+  ) {
+    super(name, age, position);
+    this.officeNumber = officeNumber;
+  }
+}
+```
