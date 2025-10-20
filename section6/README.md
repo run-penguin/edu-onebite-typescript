@@ -2,6 +2,7 @@
 
 1. [자바스크립트의 클래스](#자바스크립트의-클래스)
 2. [타입스크립트의 클래스](#타입스크립트의-클래스)
+3. [인터페이스를 구현하는 클래스](#인터페이스를-구현하는-클래스)
 
 ## 자바스크립트의 클래스
 
@@ -340,3 +341,29 @@ class Employee {
   }
 }
 ```
+
+## 인터페이스를 구현하는 클래스
+
+인터페이스는 클래스의 설계도 역할을 할 수 있음
+
+```typescript
+interface CharacterInterface {
+  name: string;
+  moveSpeed: number;
+  move(): void;
+}
+
+class Character implements CharacterInterface {
+  constructor(
+    public name: string,
+    public moveSpeed: number,
+    private extra: string
+  ) {}
+
+  move(): void {
+    console.log(`${this.moveSpeed} 속도로 이동!`);
+  }
+}
+```
+
+> interface로 구현하는 class에는 public만 사용 가능함 (private, protected 사용 안됨)
