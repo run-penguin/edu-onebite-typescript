@@ -2,6 +2,7 @@
 
 1. [제네릭 소개](#제네릭-소개)
 2. [타입 변수 응용](#타입-변수-응용)
+3. [map, forEach 메서드 타입 정의](#map-foreach-메서드-타입-정의)
 
 # 제네릭 소개
 
@@ -123,4 +124,70 @@ getLength({ length: 1 }); // ✅
 getLength(undefined); // ❌
 
 getLength(null); // ❌
+```
+
+# map, forEach 메서드 타입 정의
+
+### map
+
+1. 메서드를 적용할 배열을 매개변수 arr로 받고, 콜백 함수를 매개변수 callback으로 받는다.
+
+```typescript
+function map<T>(arr: T[], callback: (item: T) => T): T[] {}
+```
+
+2. 함수 내부를 구현한다.
+
+```typescript
+function map<T>(arr: T[], callback: (item: T) => T): T[] {
+  let result = [];
+  for (let i = 0; i < arr.length; i++) {
+    result.push(callback(arr[i]));
+  }
+  return result;
+}
+```
+
+3. 함수를 호출한다.
+
+```typescript
+const arr = [1, 2, 3];
+
+function map<T>(arr: T[], callback: (item: T) => T): T[] {
+  (...)
+}
+
+map(arr, (it) => it * 2);
+// number[] 타입의 배열을 반환
+// 결과 : [2, 4, 6]
+
+map(arr, (it) => it.toString()); // ❌
+```
+
+첫번째 인수로 arr을 전달 -> 타입 변수 T에 number 타입 할당 -> 콜백 함수의 반환값 타입도 number[]
+
+따라서 toString()을 호출했을 때 오류가 발생한다.
+
+다른 타입의 배열로도 변환할 수 있도록 아래와 같이 반환값 타입에 타입 변수를 추가한다.
+
+```typescript
+const arr = [1, 2, 3];
+
+function map<T, U>(arr: T[], callback: (item: T) => U): U[] {
+  (...)
+}
+
+map(arr, (it) => it.toString());
+// string[] 타입의 배열을 반환
+// 결과 : ["1", "2", "3"]
+```
+
+### forEach
+
+```typescript
+function forEach<T>(arr: T[], callback: (item: T) => void) {
+  for (let i = 0; i < arr.length; i++) {
+    callback(arr[i]);
+  }
+}
 ```
