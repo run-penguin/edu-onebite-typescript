@@ -5,6 +5,7 @@
 3. [map, forEach 메서드 타입 정의](#map-foreach-메서드-타입-정의)
 4. [제네릭 인터페이스, 제네릭 타입 별칭](#제네릭-인터페이스-제네릭-타입-별칭)
 5. [제네릭 클래스](#제네릭-클래스)
+6. [프로미스와 제네릭](#프로미스와-제네릭)
 
 # 제네릭 소개
 
@@ -405,4 +406,62 @@ class List<T> {
 
 const numberList = new List<number>([1, 2, 3]);
 const stringList = new List<string>(["1", "2"]);
+```
+
+# 프로미스와 제네릭
+
+Promise는 제네릭 클래스로 구현되어 있습니다. 따라서 새로운 Promise를 생성할 때 타입 변수에 할당할 타입을 직접 설정해주면 해당 타입이 resolve 결과값의 타입이 됩니다.
+
+```typescript
+const promise = new Promise<number>((resolve, reject) => {
+  setTimeout(() => {
+    // 결과값 : 20
+    resolve(20);
+  }, 3000);
+});
+
+promise.then((response) => {
+  // response는 number 타입
+  console.log(response);
+});
+
+promise.catch((error) => {
+  if (typeof error === "string") {
+    console.log(error);
+  }
+});
+```
+
+reject 함수에 인수로 전달하는 값의 타입은 unknown으로 따로 정의할 수 없습니다. catch 메서드에서 사용하려면 타입 좁히기를 통해 안전하게 사용해야 합니다.
+
+어떤 함수가 Promise 객체를 반환한다면 다음과 같이 작성할 수 있습니다.
+
+```typescript
+function fetchPost() {
+  return new Promise<Post>((resolve, reject) => {
+    setTimeout(() => {
+      resolve({
+        id: 1,
+        title: "게시글 제목",
+        content: "게시글 본문",
+      });
+    }, 3000);
+  });
+}
+```
+
+다음과 같이 직관적으로 반환값 타입을 직접 명시해도 됩니다. (추천)
+
+```typescript
+function fetchPost(): Promise<Post> {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve({
+        id: 1,
+        title: "게시글 제목",
+        content: "게시글 본문",
+      });
+    }, 3000);
+  });
+}
 ```
