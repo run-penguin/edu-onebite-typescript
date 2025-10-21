@@ -191,3 +191,152 @@ function forEach<T>(arr: T[], callback: (item: T) => void) {
   }
 }
 ```
+
+# 제네릭 인터페이스, 제네릭 타입 별칭
+
+### 제네릭 인터페이스
+
+```typescript
+interface KeyPair<K, V> {
+  key: K;
+  value: V;
+}
+```
+
+```typescript
+let keyPair: KeyPair<string, number> = {
+  key: "key",
+  value: 0,
+};
+
+let keyPair2: KeyPair<boolean, string[]> = {
+  key: true,
+  value: ["1"],
+};
+```
+
+> 제네릭 인터페이스는 제네릭 함수와는 달리 변수의 타입으로 정의할 때, 반드시 꺽쇠와 함께 타입 변수에 할당할 타입을 명시해야 합니다.
+
+> 제네릭 함수는 매개변수에 제공되는 값의 타입을 기준으로 타입 변수의 타입을 추론할 수 있지만, 인터페이스는 추론할 수 없기 때문입니다.
+
+#### 인덱스 시그니처와 함께 사용하기
+
+제네릭 인터페이스는 인덱스 시그니처와 함께 사용하면 훨씬 더 유연한 객체 타입을 정의할 수 있습니다.
+
+```typescript
+interface Map<V> {
+  [key: string]: V;
+}
+
+let stringMap: Map<string> = {
+  key: "value",
+};
+
+let booleanMap: Map<boolean> = {
+  key: true,
+};
+```
+
+### 제네릭 타입 별칭
+
+```typescript
+type Map2<V> = {
+  [key: string]: V;
+};
+
+let stringMap2: Map2<string> = {
+  key: "string",
+};
+```
+
+### 제네릭 인터페이스 활용 예시
+
+```typescript
+interface Student {
+  type: "student";
+  school: string;
+}
+
+interface Developer {
+  type: "developer";
+  skill: string;
+}
+
+interface User {
+  name: string;
+  profile: Student | Developer;
+}
+
+function goToSchool(user: User<Student>) {
+  if (user.profile.type !== "student") {
+    console.log("잘 못 오셨습니다");
+    return;
+  }
+
+  const school = user.profile.school;
+  console.log(`${school}로 등교 완료`);
+}
+
+const developerUser: User = {
+  name: "이정환",
+  profile: {
+    type: "developer",
+    skill: "typescript",
+  },
+};
+
+const studentUser: User = {
+  name: "홍길동",
+  profile: {
+    type: "student",
+    school: "가톨릭대학교",
+  },
+};
+```
+
+이때 제네릭 인터페이스를 이용하여 훨씬 간결하게 만들 수 있습니다.
+
+```typescript
+interface Student {
+  type: "student";
+  school: string;
+}
+
+interface Developer {
+  type: "developer";
+  skill: string;
+}
+
+interface User<T> {
+  name: string;
+  profile: T;
+}
+
+function goToSchool(user: User<Student>) {
+  //   if (user.profile.type !== "student") {
+  //     console.log("잘 못 오셨습니다");
+  //     return;
+  //   }
+
+  const school = user.profile.school;
+  console.log(`${school}로 등교 완료`);
+}
+
+// goToSchool(developerUser); // 호출 시 오류
+
+const developerUser: User<Developer> = {
+  name: "이정환",
+  profile: {
+    type: "developer",
+    skill: "TypeScript",
+  },
+};
+
+const studentUser: User<Student> = {
+  name: "홍길동",
+  profile: {
+    type: "student",
+    school: "가톨릭대학교",
+  },
+};
+```
