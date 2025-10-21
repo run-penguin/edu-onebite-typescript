@@ -3,6 +3,8 @@
 1. [제네릭 소개](#제네릭-소개)
 2. [타입 변수 응용](#타입-변수-응용)
 3. [map, forEach 메서드 타입 정의](#map-foreach-메서드-타입-정의)
+4. [제네릭 인터페이스, 제네릭 타입 별칭](#제네릭-인터페이스-제네릭-타입-별칭)
+5. [제네릭 클래스](#제네릭-클래스)
 
 # 제네릭 소개
 
@@ -339,4 +341,68 @@ const studentUser: User<Student> = {
     school: "가톨릭대학교",
   },
 };
+```
+
+# 제네릭 클래스
+
+아래와 같은 Number 타입의 리스트를 생성하는 클래스가 있습니다.
+
+```typescript
+class NumberList {
+  constructor(private list: number[]) {}
+
+  push(data: number) {
+    this.list.push(data);
+  }
+
+  pop() {
+    return this.list.pop();
+  }
+
+  print() {
+    console.log(this.list);
+  }
+}
+
+const numberList = new NumberList([1, 2, 3]);
+```
+
+그런데 String 타입의 리스트를 생성하는 클래스도 필요하다면, 거의 동일한 클래스를 새로 생성해야 합니다.
+
+이때 제네릭 클래스로 변경하여 간결하게 작성할 수 있습니다.
+
+```typescript
+class List<T> {
+  constructor(private list: T[]) {}
+
+  push(data: T) {
+    this.list.push(data);
+  }
+
+  pop() {
+    return this.list.pop();
+  }
+
+  print() {
+    console.log(this.list);
+  }
+}
+
+const numberList = new List([1, 2, 3]);
+const stringList = new List(["1", "2"]);
+```
+
+클래스 생성자를 통해 타입 변수의 타입을 추론할 수 있기 때문에 생성자에 인수로 전달하는 값이 있을 경우 타입 변수에 할당할 타입을 생략할 수 있습니다.
+
+직접 설정하고 싶다면 아래와 같이 작성합니다.
+
+```typescript
+class List<T> {
+  constructor(private list: T[]) {}
+
+  (...)
+}
+
+const numberList = new List<number>([1, 2, 3]);
+const stringList = new List<string>(["1", "2"]);
 ```
