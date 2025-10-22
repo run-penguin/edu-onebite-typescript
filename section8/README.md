@@ -3,6 +3,7 @@
 1. [타입 조작이란](#타입-조작이란)
 2. [인덱스드 액세스 타입](#인덱스드-액세스-타입)
 3. [keyof 연산자](#keyof-연산자)
+4. [맵드 타입](#맵드-타입)
 
 # 타입 조작이란
 
@@ -177,4 +178,53 @@ type Person2 = typeof person2;
 function getPropertyKey2(person: Person, key: keyof typeof person2) {
   return person2[key];
 }
+```
+
+# 맵드 타입
+
+기존의 객체 타입을 기반으로 새로운 객체 타입을 만드는 기능
+
+```typescript
+interface User {
+  id: number;
+  name: string;
+  age: number;
+}
+
+function fetchUser(): User {
+  (...)
+}
+
+function updateUser(user: User) {
+  // ... 유저 정보 수정 기능
+}
+
+updateUser({ // ❌
+  age: 25
+});
+```
+
+updateUser 함수의 매개변수가 User 타입이므로 수정된 특정 프로퍼티만 보내는 것이 허용되지 않습니다.
+
+```typescript
+interface User {
+  id: number;
+  name: string;
+  age: number;
+}
+
+type PartialUser = {
+  [key in "id" | "name" | "age"]?: User[key]; // 맵드 타입
+  // [key in keyof User]?: User[key]; // 맵드 타입에 keyof 연산자 활용
+};
+
+// 프로퍼티 모두 boolean인 타입 만들기
+type BooleanUser = {
+  [key in "id" | "name" | "age"]: boolean;
+};
+
+// 모든 프로퍼티가 읽기 전용인 타입 만들기
+type ReadonlyUser = {
+  readonly [key in keyof User]: User[key];
+};
 ```
