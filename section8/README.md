@@ -2,6 +2,7 @@
 
 1. [타입 조작이란](#타입-조작이란)
 2. [인덱스드 액세스 타입](#인덱스드-액세스-타입)
+3. [keyof 연산자](#keyof-연산자)
 
 # 타입 조작이란
 
@@ -115,4 +116,65 @@ type Tup1 = Tup[1];
 type Tup2 = Tup[2];
 // type Tup3 = Tup[3]; // 없는 타입은 오류
 type TupNum = Tup[number]; // number | string | boolean
+```
+
+# keyof 연산자
+
+객체 타입으로부터 프로퍼티의 모든 Key들을 String Literal Union 타입으로 추출하는 연산자
+
+```typescript
+interface Person {
+  name: string;
+  age: number;
+  location: string; // 추가
+}
+
+function getPropertyKey(person: Person, key: "name" | "age" | "location") {
+  return person[key];
+}
+
+const person: Person = {
+  name: "이정환",
+  age: 27,
+};
+```
+
+Person의 프로퍼티가 변경되면 key에도 반영되어야 합니다.
+
+이때 아래와 같이 keyof 연산자를 활용할 수 있습니다.
+
+```typescript
+function getPropertyKey(person: Person, key: keyof Person) {
+  return person[key];
+}
+```
+
+> 'keyof 연산자'는 오직 타입만 적용할 수 있습니다.
+
+```typescript
+// 오류 발생
+function getPropertyKey(person: Person, key: keyof person) {
+  return person[key];
+}
+```
+
+### typeof
+
+특정 값의 타입을 문자열로 반환하는 연산자로, 타입을 정의할 때 사용하면 특정 변수의 타입을 추론할 수 있습니다.
+
+```typescript
+const person2 = {
+  name: "이정화",
+  location: "부산",
+};
+
+type Person2 = typeof person2;
+```
+
+### keyof + typeof
+
+```typescript
+function getPropertyKey2(person: Person, key: keyof typeof person2) {
+  return person2[key];
+}
 ```
