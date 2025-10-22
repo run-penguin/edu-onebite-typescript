@@ -4,6 +4,7 @@
 2. [인덱스드 액세스 타입](#인덱스드-액세스-타입)
 3. [keyof 연산자](#keyof-연산자)
 4. [맵드 타입](#맵드-타입)
+5. [템플릿 리터럴 타입](#템플릿-리터럴-타입)
 
 # 타입 조작이란
 
@@ -228,3 +229,18 @@ type ReadonlyUser = {
   readonly [key in keyof User]: User[key];
 };
 ```
+
+# 템플릿 리터럴 타입
+
+특정 패턴을 갖는 String 타입을 만드는 기능
+
+```typescript
+type Color = "red" | "black" | "green";
+
+type Animal = "dog" | "cat" | "chicken";
+
+// type ColoredAnimal = 'red-dog' | 'red-cat' | 'red-chicken' | 'black-dog' ...  // 불편..
+type ColoredAnimal = `${Color}-${Animal}`;
+```
+
+Color와 Animal을 조합해 만들 수 있는 모든 가지수의 String Literal 타입으로 만들어줍니다.
