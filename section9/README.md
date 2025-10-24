@@ -110,3 +110,57 @@ type Extract<T, U> = T extends U ? T : never;
 
 type B = Extract<number | string | boolean, string>;
 ```
+
+# infer
+
+조건부 타입 내에서 특정 타입을 추론하는 문법입니다.
+
+```typescript
+type ReturnType<T> = T extends () => infer R ? R : never;
+
+type FuncA = () => string;
+
+type FuncB = () => number;
+
+type A = ReturnType<FuncA>;
+// string
+
+type B = ReturnType<FuncB>;
+// number
+```
+
+infer R은 조건식이 참이 되도록 만들 수 있는 최적의 R 타입을 추론하라는 의미입니다.
+
+```typescript
+type ReturnType<T> = T extends () => infer R ? R : never;
+
+type FuncA = () => string;
+
+type FuncB = () => number;
+
+type A = ReturnType<FuncA>;
+// string
+
+type B = ReturnType<FuncB>;
+// number
+
+type C = ReturnType<number>;
+// 조건식을 만족하는 R추론 불가능
+// never
+```
+
+추론이 불가능하다면 조건식을 false로 판단합니다.
+
+> Promise의 resolve 타입을 infer를 이용해 추출하는 예시
+
+```typescript
+type PromiseUnpack<T> = T extends Promise<infer R> ? R : never;
+// 1. T는 프로미스 타입이어야 한다.
+// 2. 프로미스 타입의 결과값 타입을 반환해야 한다.
+
+type PromiseA = PromiseUnpack<Promise<number>>;
+// number
+
+type PromiseB = PromiseUnpack<Promise<string>>;
+// string
+```
