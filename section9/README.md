@@ -1,6 +1,7 @@
 # 목차
 
 1. [조건부 타입](#조건부-타입)
+2. [분산적인 조건부 타입](#분산적인-조건부-타입)
 
 # 조건부 타입
 
@@ -25,7 +26,7 @@ type B = ObjB extends ObjA ? number : string;
 
 objA는 슈퍼타입, objB는 서브타입이므로 true가 반환되어 number가 됩니다.
 
-## 제네릭 조건부 타입
+### 제네릭 조건부 타입
 
 ```typescript
 type StringNumberSwitch<T> = T extends number ? string : number;
@@ -72,4 +73,40 @@ let result = removeSpaces("hi im winterlood");
 
 let result2 = removeSpaces(undefined);
 // undefined
+```
+
+# 분산적인 조건부 타입
+
+조건부 타입의 타입 변수에 Union 타입을 할당하면 '분산적인 조건부 타입'이 됩니다.
+
+분산적인 조건부 타입은 다음과 같이 동작합니다.
+
+1. 타입 변수에 할당한 Union 타입 내부의 모든 타입이 분리됩니다.
+2. 분산된 각 타입의 결과를 모아 다시 Union 타입으로 묶습니다.
+
+```typescript
+type StringNumberSwitch<T> = T extends number ? string : number;
+
+let c: StringNumberSwitch<number | string>;
+// string | number
+```
+
+### Exclude (제외하다)
+
+특정 타입만 제거
+
+```typescript
+type Exclude<T, U> = T extends U ? never : T;
+
+type A = Exclude<number | string | boolean, string>;
+```
+
+### Extract (뽑아내다)
+
+특정 타입만 추출
+
+```typescript
+type Extract<T, U> = T extends U ? T : never;
+
+type B = Extract<number | string | boolean, string>;
 ```
