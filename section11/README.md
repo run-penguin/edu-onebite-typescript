@@ -104,3 +104,44 @@ document.getElementById("root") as HTMLElement;
 ```
 
 # 상태관리와 Props
+
+```typescript
+const [text, setText] = useState("");
+```
+
+text는 string으로 유추됩니다. **_(권장)_**
+
+```typescript
+const [text, setText] = useState<string>();
+```
+
+text는 string | undefined로 유추됩니다.
+
+```typescript
+const onChangeInput = (e) => {
+  setText(e.target.value);
+};
+```
+
+## 이벤트 핸들러의 타입 설정
+
+```typescript
+// 잘못된 예시 1
+const onChangeInput = (e: any) => {
+  setText(e.target.value);
+};
+```
+
+```typescript
+// 잘못된 예시 2
+const onChangeInput = (e: { target: { value: string } }) => {
+  setText(e.target.value);
+};
+```
+
+```typescript
+// 올바른 예시
+const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  setText(e.target.value);
+};
+```
